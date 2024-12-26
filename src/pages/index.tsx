@@ -125,7 +125,14 @@ export default function Home() {
 				className='w-full bg-white rounded-lg p-6 mb-8 space-y-2 max-w-3xl mx-auto'
 			>
 				<h2 className='text-3xl font-bold m-4 text-center'>SNeL Story</h2>
-
+				<video
+					className='w-full rounded-lg mt-4'
+					controls
+					poster='/memecoinVideo_thumb.png'
+				>
+					<source src='/memecoinVideo_1.mp4' type='video/mp4' />
+					Your browser does not support the video tag.
+				</video>
 				<p className='p-2'>
 					SNeL comes from the Immortal Snail meme, where on a podcast the
 					question was asked: <br /> "What would you do if you were given
