@@ -76,7 +76,7 @@ export default function Home() {
 				<div className='flex items-center space-4 m-2'>
 					<a
 						target='_blank'
-						href='https://www.snek.fun/token/067cac6082f8661b6e14909b40590120bf0bf02c21f5d07ee03d0e02.534e654c'
+						href='https://app.dexhunter.io/swap?tokenIdSell=&tokenIdBuy=067cac6082f8661b6e14909b40590120bf0bf02c21f5d07ee03d0e02534e654c'
 						className='bg-primary text-black px-6 py-3 m-4 rounded-lg text-lg hover:bg-blue-700 transition'
 					>
 						Buy $SNeL
@@ -108,12 +108,12 @@ export default function Home() {
 					<li>
 						Visit{" "}
 						<a
-							href='https://www.snek.fun/token/067cac6082f8661b6e14909b40590120bf0bf02c21f5d07ee03d0e02.534e654c'
+							href='https://app.dexhunter.io/swap?tokenIdSell=&tokenIdBuy=067cac6082f8661b6e14909b40590120bf0bf02c21f5d07ee03d0e02534e654c'
 							target='_blank'
 							rel='noopener noreferrer'
 							className='text-blue-600 underline hover:text-blue-800'
 						>
-							snek.fun
+							dexhunter.io
 						</a>{" "}
 						and swap your Cardano for SNeL!
 					</li>
@@ -151,7 +151,21 @@ export default function Home() {
 			{/* SNeLenomics*/}
 			<section id='snelenomics' className='w-full bg-white rounded-lg p-6 mb-8'>
 				<h2 className='text-3xl font-bold m-4 text-center'>SNeLenomics</h2>
-				<p className='text-center'>Coming soon...</p>
+				<Image
+					src='/snelenomics1.png'
+					alt='First Image Description'
+					width={1000} // The width and height can be omitted or set to 0 when using `w-full`
+					height={0}
+					className='w-full h-auto rounded-lg shadow-md mb-4'
+				/>
+				<h2 className='text-3xl font-bold m-4 text-center'>Dev Wallet</h2>
+				<Image
+					src='/snelenomics-dev-wallet.png'
+					alt='Second Image Description'
+					width={1000}
+					height={0}
+					className='w-full h-auto rounded-lg shadow-md'
+				/>
 			</section>
 
 			{/* Footer */}
