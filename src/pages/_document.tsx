@@ -7,12 +7,13 @@ export default function Document() {
 				{/* Custom Favicon */}
 				<link rel='icon' href='/favicon.png' />
 
-				{/* Google Fonts for Geist and Geist Mono */}
+				{/* Google Fonts */}
+				<link rel='preconnect' href='https://fonts.googleapis.com' />
+				<link rel='preconnect' href='https://fonts.gstatic.com' />
 				<link
-					href='https://fonts.googleapis.com/css2?family=Geist:wght@400;700&family=Geist+Mono&display=swap'
+					href='https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@100..900&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Jost:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Titan+One&family=Varela+Round&display=swap'
 					rel='stylesheet'
 				/>
-
 				{/* Meta Tags for SEO */}
 				<meta
 					name='description'

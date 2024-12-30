@@ -14,6 +14,11 @@ export default {
 				primary: "#f7d9a9",
 				secondary: "#4a342c",
 			},
+			fontFamily: {
+				robotoMono: ['"Roboto Mono"', "monospace"],
+				shoulders: ['"Big Shoulders Display"', "sans-serif"],
+				titan: ['"Titan One"', "cursive"],
+			},
 		},
 	},
 	plugins: [],

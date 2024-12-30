@@ -1,7 +1,29 @@
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import { FaTwitter, FaTiktok, FaDiscord, FaTelegram } from "react-icons/fa";
 
 export default function Home() {
+	const [holderCount, setHolderCount] = useState<number | null>(null);
+
+	useEffect(() => {
+		// Fetch holder count from the API
+		const fetchHolderCount = async () => {
+			try {
+				const response = await fetch(
+					`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/snel-holders`
+				);
+				const data = await response.json();
+				console.log("response == ", response);
+				if (data.holders) {
+					setHolderCount(data.holders.length);
+				}
+			} catch (error) {
+				console.error("Error fetching holder count:", error);
+			}
+		};
+
+		fetchHolderCount();
+	}, []);
 	return (
 		<main className='flex flex-col items-center justify-center min-h-screen p-6'>
 			{/* Welcome Section */}
@@ -71,19 +93,24 @@ export default function Home() {
 						/>
 					</a> */}
 				</div>
-
+				{/* Display Holder Count */}
+				{holderCount !== null && (
+					<p className='text-xl font-bold text-secondary mb-6'>
+						{holderCount.toLocaleString()} Holders and Growing!
+					</p>
+				)}
 				{/* Call-to-Action Buttons */}
 				<div className='flex items-center space-4 m-2'>
 					<a
 						target='_blank'
 						href='https://app.dexhunter.io/swap?tokenIdSell=&tokenIdBuy=067cac6082f8661b6e14909b40590120bf0bf02c21f5d07ee03d0e02534e654c'
-						className='bg-primary text-black px-6 py-3 m-4 rounded-lg text-lg hover:bg-blue-700 transition'
+						className='bg-primary text-black px-6 py-3 m-4 rounded-lg text-lg transition'
 					>
 						Buy $SNeL
 					</a>
 					<a
 						href='#snel-story'
-						className='text-blue-600 underline text-lg hover:text-blue-800 transition'
+						className='text-blue-60 btn-secondary text-lg transition'
 					>
 						SNeL Story
 					</a>
@@ -99,8 +126,8 @@ export default function Home() {
 						<strong>Coinbase</strong> or <strong>Kraken</strong>.
 					</li>
 					<li>
-						Download a Cardano wallet like <strong>Nami</strong>,{" "}
-						<strong>Vespr</strong>, or a similar wallet.
+						Download a Cardano wallet like <strong>Eternl</strong>,{" "}
+						<strong>Vespr</strong>, <strong>Lace</strong>, or a similar wallet.
 					</li>
 					<li>
 						Transfer your Cardano from the exchange to your wallet’s address.
@@ -135,9 +162,10 @@ export default function Home() {
 				</video>
 				<p className='p-2'>
 					SNeL comes from the Immortal Snail meme, where on a podcast the
-					question was asked: <br /> "What would you do if you were given
-					millions of dollars and immortality? And there is also an immortal
-					snail that would kill you if it touched you."
+					question was asked: <br /> <br /> "What would you do if you were given
+					millions of dollars and immortality? There is also an immortal snail
+					that would kill you if it touched you, and won't stop until it finds
+					you."
 				</p>
 				<p className='p-2'>
 					SNeL on Cardano is the immortal snail which is coming for Snek.
