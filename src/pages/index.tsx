@@ -170,10 +170,6 @@ export default function Home() {
 				<p className='p-2'>
 					SNeL on Cardano is the immortal snail which is coming for Snek.
 				</p>
-				<p className='p-2'>
-					SNeL has a dedicated team that will not let the project die. The team
-					is here to grow slow and steady like the SNeL
-				</p>
 			</section>
 
 			{/* SNeLenomics*/}
