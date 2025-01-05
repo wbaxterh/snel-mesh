@@ -5,11 +5,13 @@ import Image from "next/image";
 export default function Header() {
 	const { wallet, connected } = useWallet();
 	const [snelBalance, setSnelBalance] = useState<string | null>(null);
+	const [usdValue, setUsdValue] = useState<number | null>(null);
 	const [menuOpen, setMenuOpen] = useState(false); // State for the mobile menu
 
 	const SNEL_POLICY_ID =
 		"067cac6082f8661b6e14909b40590120bf0bf02c21f5d07ee03d0e02";
 
+	// Fetch SNeL Balance from the Wallet
 	const fetchSnelBalance = useCallback(async () => {
 		try {
 			if (!connected || !wallet) {
@@ -27,19 +29,43 @@ export default function Header() {
 					snelQuantity
 				);
 				setSnelBalance(formattedBalance);
+				return Number(snelQuantity);
 			} else {
 				setSnelBalance("0");
+				return 0;
 			}
 		} catch (err) {
 			console.error("Error fetching SNeL balance:", err);
+			return 0;
 		}
 	}, [connected, wallet]);
 
+	// Fetch SNeL Price from the Market Cap API
+	const fetchSnelPrice = useCallback(async () => {
+		try {
+			const response = await fetch(
+				`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/snel-marketcap`
+			);
+			const data = await response.json();
+			return parseFloat(data.priceInUSD);
+		} catch (err) {
+			console.error("Error fetching SNeL price:", err);
+			return 0;
+		}
+	}, []);
+
+	// Fetch both balance and price to calculate USD value
+	const fetchBalanceAndUsdValue = useCallback(async () => {
+		const balance = await fetchSnelBalance();
+		const price = await fetchSnelPrice();
+		setUsdValue(balance * price);
+	}, [fetchSnelBalance, fetchSnelPrice]);
+
 	useEffect(() => {
 		if (connected) {
-			fetchSnelBalance();
+			fetchBalanceAndUsdValue();
 		}
-	}, [connected, fetchSnelBalance]);
+	}, [connected, fetchBalanceAndUsdValue]);
 
 	const handleSmoothScroll = (
 		e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -54,7 +80,7 @@ export default function Header() {
 	};
 
 	return (
-		<header className='bg-primary text-white py-4 shadow-md relative'>
+		<header className='bg-primary text-white  py-4 shadow-md relative sticky top-0 z-50'>
 			<div className='container mx-auto flex justify-between items-center px-6'>
 				{/* Logo and Wallet */}
 				<div className='flex items-center space-x-4'>
@@ -67,9 +93,22 @@ export default function Header() {
 					/>
 					<CardanoWallet label='Connect Wallet' />
 					{connected && snelBalance !== null && (
-						<p className='text-sm text-black'>
-							SNeL Balance: <strong>{snelBalance}</strong>
-						</p>
+						<div className='text-sm text-black lg:ml-4'>
+							<p>
+								SNeL Balance: <strong>{snelBalance}</strong>
+							</p>
+							{usdValue !== null && (
+								<p>
+									Value in USD:{" "}
+									<strong>
+										$
+										{usdValue.toLocaleString("en-US", {
+											minimumFractionDigits: 2,
+										})}
+									</strong>
+								</p>
+							)}
+						</div>
 					)}
 				</div>
 

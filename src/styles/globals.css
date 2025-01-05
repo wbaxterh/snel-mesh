@@ -25,3 +25,7 @@ a {
 .btn-secondary {
 	@apply border-2 border-secondary text-secondary bg-transparent font-semibold rounded-lg px-4 py-2 hover:bg-secondary hover:text-white transition duration-200;
 }
+
+body {
+	overflow-x: hidden !important;
+}

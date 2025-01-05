@@ -1,29 +1,74 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { FaTwitter, FaTiktok, FaDiscord, FaTelegram } from "react-icons/fa";
 
 export default function Home() {
 	const [holderCount, setHolderCount] = useState<number | null>(null);
+	const [priceInUSD, setPriceInUSD] = useState<string | null>(null);
+	const [priceInADA, setPriceInADA] = useState<string | null>(null);
+	const [marketCap, setMarketCap] = useState<string | null>(null);
+
+	// Helper function to format market cap
+	const formatMarketCap = (value: string | null): string => {
+		if (!value) return "N/A";
+		const num = parseFloat(value);
+		if (num >= 1e6) return `${(num / 1e6).toFixed(1)}M`; // Format in millions
+		if (num >= 1e3) return `${(num / 1e3).toFixed(1)}k`; // Format in thousands
+		return num.toFixed(1); // No formatting needed for small values
+	};
+
+	// Helper function to format price
+	const formatPrice = (price: string | null): string => {
+		if (!price) return "N/A";
+		const num = parseFloat(price);
+		if (num < 0.01) {
+			// Format small values as fractions of a cent
+			return num < 0.0001
+				? `${(num * 1e6).toFixed(2)}µ¢` // Display in micro cents for very small values
+				: `${(num * 100).toFixed(4)}¢`; // Display in cents
+		}
+		return `$${num.toFixed(4)}`; // Display regular prices normally
+	};
+
+	const formatPriceInADA = (priceInADA: string | null): string => {
+		if (!priceInADA) return "N/A";
+		const num = parseFloat(priceInADA);
+
+		// if (num < 0.0001) {
+		// 	return `${(num * 1e6).toFixed(2)} micro ADA`;
+		// }
+
+		return `${num} ADA`;
+	};
 
 	useEffect(() => {
-		// Fetch holder count from the API
-		const fetchHolderCount = async () => {
+		// Fetch data from the API
+		const fetchData = async () => {
 			try {
-				const response = await fetch(
+				// Fetch holder count
+				const holderResponse = await fetch(
 					`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/snel-holders`
 				);
-				const data = await response.json();
-				console.log("response == ", response);
-				if (data.holders) {
-					setHolderCount(data.holders.length);
+				const holderData = await holderResponse.json();
+				if (holderData.holders) {
+					setHolderCount(holderData.holders.length);
 				}
+
+				// Fetch market cap and price data
+				const marketCapResponse = await fetch(
+					`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/snel-marketcap`
+				);
+				const marketCapData = await marketCapResponse.json();
+				setPriceInUSD(marketCapData.priceInUSD);
+				setPriceInADA(marketCapData.priceInADA);
+				setMarketCap(marketCapData.marketCap);
 			} catch (error) {
-				console.error("Error fetching holder count:", error);
+				console.error("Error fetching data:", error);
 			}
 		};
 
-		fetchHolderCount();
+		fetchData();
 	}, []);
+
 	return (
 		<main className='flex flex-col items-center justify-center min-h-screen p-6'>
 			{/* Welcome Section */}
@@ -57,19 +102,6 @@ export default function Home() {
 							className='hover:scale-110 transition'
 						/>
 					</a>
-					{/* <a
-						href='https://tiktok.com/@snel'
-						target='_blank'
-						rel='noopener noreferrer'
-					>
-						<Image
-							src='/icons/tiktok.svg'
-							alt='TikTok'
-							width={40}
-							height={40}
-							className='hover:scale-110 transition'
-						/>
-					</a> */}
 					<a
 						href='https://discord.gg/m9zbMgzA'
 						target='_blank'
@@ -83,22 +115,37 @@ export default function Home() {
 							className='hover:scale-110 transition'
 						/>
 					</a>
-					{/* <a href='https://t.me/snel' target='_blank' rel='noopener noreferrer'>
-						<Image
-							src='/icons/telegram.svg'
-							alt='Telegram'
-							width={40}
-							height={40}
-							className='hover:scale-110 transition'
-						/>
-					</a> */}
 				</div>
-				{/* Display Holder Count */}
-				{holderCount !== null && (
-					<p className='text-xl font-bold text-secondary mb-6'>
-						{holderCount.toLocaleString()} Holders and Growing!
-					</p>
-				)}
+
+				{/* Display Metrics */}
+				<div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 text-center'>
+					{holderCount !== null && (
+						<div className='p-4 bg-white rounded-lg shadow-md'>
+							<h2 className='text-2xl font-bold'>
+								{holderCount.toLocaleString()}
+							</h2>
+							<p className='text-gray-600'>Holders</p>
+						</div>
+					)}
+					{priceInUSD !== null && (
+						<div className='p-4 bg-white rounded-lg shadow-md'>
+							<h2 className='text-2xl font-bold'>
+								{formatPriceInADA(priceInADA)}
+							</h2>
+							<p className='text-gray-600'>Price (ADA)</p>
+						</div>
+					)}
+					{marketCap !== null && (
+						<div className='p-4 bg-white rounded-lg shadow-md'>
+							<h2 className='text-2xl font-bold'>
+								${formatMarketCap(marketCap)}
+							</h2>
+							<p className='text-gray-600'>Market Cap</p>
+						</div>
+					)}
+				</div>
+			</section>
+			<section>
 				{/* Call-to-Action Buttons */}
 				<div className='flex items-center space-4 m-2'>
 					<a
