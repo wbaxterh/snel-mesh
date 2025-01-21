@@ -103,7 +103,7 @@ export default function Home() {
 						/>
 					</a>
 					<a
-						href='https://discord.gg/QPMSbwPz'
+						href='https://discord.gg/QGG9Z25bz7'
 						target='_blank'
 						rel='noopener noreferrer'
 					>
