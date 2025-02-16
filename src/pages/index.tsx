@@ -243,7 +243,7 @@ export default function Home() {
 				/>
 				<h2 className='text-3xl font-bold m-4 text-center'>Dev Wallet</h2>
 				<Image
-					src='/graphics/SnelenomicsDev.png'
+					src='/graphics/snelenomicsDev.png'
 					alt='Dev Wallet'
 					width={1000}
 					height={0}
