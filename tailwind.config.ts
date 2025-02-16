@@ -11,8 +11,9 @@ export default {
 			colors: {
 				background: "var(--background)",
 				foreground: "var(--foreground)",
-				primary: "#f7d9a9",
-				secondary: "#4a342c",
+				primary: "#95D08B",
+				secondary: "#573838",
+				silver: "#D9D9D9",
 			},
 			fontFamily: {
 				robotoMono: ['"Roboto Mono"', "monospace"],

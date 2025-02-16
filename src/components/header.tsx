@@ -80,15 +80,15 @@ export default function Header() {
 	};
 
 	return (
-		<header className='bg-primary text-white  py-4 shadow-md relative sticky top-0 z-50'>
+		<header className='bg-silver text-white  py-4 shadow-md relative sticky top-0 z-50'>
 			<div className='container mx-auto flex justify-between items-center px-6'>
 				{/* Logo and Wallet */}
 				<div className='flex items-center space-x-4'>
 					<Image
-						src='/snelPill.png'
+						src='/graphics/snelPill2.png'
 						alt='SNeL Memecoin Logo'
-						width={55}
-						height={55}
+						width={125}
+						height={125}
 						className=''
 					/>
 					<CardanoWallet label='Connect Wallet' />
@@ -134,27 +134,35 @@ export default function Header() {
 				</button>
 
 				{/* Desktop Navigation Links */}
-				<nav className='hidden lg:flex space-x-6 text-black'>
+				<nav className='hidden lg:flex space-x-6 items-center text-black'>
 					<a
 						href='#how-to-buy'
 						onClick={handleSmoothScroll}
 						className='hover:text-blue-300 transition'
 					>
-						How To Buy
+						About
 					</a>
 					<a
 						href='#snel-story'
 						onClick={handleSmoothScroll}
 						className='hover:text-blue-300 transition'
 					>
-						SNeL Story
+						Blog
 					</a>
 					<a
 						href='#snelenomics'
 						onClick={handleSmoothScroll}
 						className='hover:text-blue-300 transition'
 					>
-						SNeLenomics
+						Contact
+					</a>
+					<a
+						href='https://app.dexhunter.io/swap?tokenIdSell=&tokenIdBuy=067cac6082f8661b6e14909b40590120bf0bf02c21f5d07ee03d0e02534e654c'
+						target='_blank'
+						rel='noopener noreferrer'
+						className='mr-2 px-4 py-2 bg-primary flex items-center justify-center hover:bg-primary text-black font-bold rounded'
+					>
+						Buy SNeL
 					</a>
 				</nav>
 			</div>

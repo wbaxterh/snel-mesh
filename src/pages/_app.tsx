@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 import { MeshProvider } from "@meshsdk/react";
 import { Geist, Geist_Mono } from "next/font/google";
 import Header from "../components/header";
+import Footer from "../components/footer";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -22,6 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
 			<main>
 				<Component {...pageProps} />
 			</main>
+			<Footer />
 		</MeshProvider>
 	);
 }
