@@ -18,7 +18,7 @@ export default function Home() {
 			step: "Step 2:",
 			title: "Purchase ADA",
 			description:
-				"ADA is Cardano’s native cryptocurrency. You can purchase through centralized exchanges like Coinbase, Kraken, or Binance, then transfer it to your wallet.",
+				"ADA is Cardano's native cryptocurrency. You can purchase through centralized exchanges like Coinbase, Kraken, or Binance, then transfer it to your wallet.",
 		},
 		{
 			step: "Step 3:",

@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { CardanoWallet, useWallet } from "@meshsdk/react";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Header() {
 	const { wallet, connected } = useWallet();
 	const [snelBalance, setSnelBalance] = useState<string | null>(null);
 	const [usdValue, setUsdValue] = useState<number | null>(null);
 	const [menuOpen, setMenuOpen] = useState(false); // State for the mobile menu
+	const router = useRouter();
 
 	const SNEL_POLICY_ID =
 		"067cac6082f8661b6e14909b40590120bf0bf02c21f5d07ee03d0e02";
@@ -67,15 +70,22 @@ export default function Header() {
 		}
 	}, [connected, fetchBalanceAndUsdValue]);
 
-	const handleSmoothScroll = (
-		e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+	const handleSmoothScroll = async (
+		e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+		targetId: string
 	) => {
 		e.preventDefault();
-		const targetId = e.currentTarget.getAttribute("href")?.slice(1); // Remove the # symbol
-		const targetElement = document.getElementById(targetId || "");
+
+		// If we're not on the home page, navigate there first
+		if (router.pathname !== "/") {
+			await router.push("/");
+		}
+
+		// Then scroll to the section
+		const targetElement = document.getElementById(targetId);
 		if (targetElement) {
 			targetElement.scrollIntoView({ behavior: "smooth" });
-			setMenuOpen(false); // Close the menu after navigation (for mobile)
+			setMenuOpen(false);
 		}
 	};
 
@@ -84,13 +94,15 @@ export default function Header() {
 			<div className='container mx-auto flex justify-between items-center px-6'>
 				{/* Logo and Wallet */}
 				<div className='flex items-center space-x-4'>
-					<Image
-						src='/graphics/snelPill2.png'
-						alt='SNeL Memecoin Logo'
-						width={125}
-						height={125}
-						className=''
-					/>
+					<Link href='/'>
+						<Image
+							src='/graphics/snelPill2.png'
+							alt='SNeL Memecoin Logo'
+							width={125}
+							height={125}
+							className=''
+						/>
+					</Link>
 					<CardanoWallet label='Connect Wallet' />
 					{connected && snelBalance !== null && (
 						<div className='text-sm text-black lg:ml-4'>
@@ -136,26 +148,18 @@ export default function Header() {
 				{/* Desktop Navigation Links */}
 				<nav className='hidden lg:flex space-x-6 items-center text-black'>
 					<a
-						href='#how-to-buy'
-						onClick={handleSmoothScroll}
+						href='#snel-story'
+						onClick={(e) => handleSmoothScroll(e, "snel-story")}
 						className='hover:text-blue-300 transition'
 					>
 						About
 					</a>
-					<a
-						href='#snel-story'
-						onClick={handleSmoothScroll}
-						className='hover:text-blue-300 transition'
-					>
+					<Link href='/blog' className='hover:text-blue-300 transition'>
 						Blog
-					</a>
-					<a
-						href='#snelenomics'
-						onClick={handleSmoothScroll}
-						className='hover:text-blue-300 transition'
-					>
+					</Link>
+					<Link href='/contact' className='hover:text-blue-300 transition'>
 						Contact
-					</a>
+					</Link>
 					<a
 						href='https://app.dexhunter.io/swap?tokenIdSell=&tokenIdBuy=067cac6082f8661b6e14909b40590120bf0bf02c21f5d07ee03d0e02534e654c'
 						target='_blank'
@@ -198,25 +202,25 @@ export default function Header() {
 				<nav className='flex flex-col space-y-4 p-4 text-black'>
 					<a
 						href='#how-to-buy'
-						onClick={handleSmoothScroll}
+						onClick={(e) => handleSmoothScroll(e, "how-to-buy")}
 						className='hover:text-blue-300 transition'
 					>
 						How To Buy
 					</a>
-					<a
-						href='#snel-story'
-						onClick={handleSmoothScroll}
+					<Link
+						href='/blog'
 						className='hover:text-blue-300 transition'
+						onClick={() => setMenuOpen(false)}
 					>
-						SNeL Story
-					</a>
-					<a
-						href='#snelenomics'
-						onClick={handleSmoothScroll}
+						Blog
+					</Link>
+					<Link
+						href='/contact'
 						className='hover:text-blue-300 transition'
+						onClick={() => setMenuOpen(false)}
 					>
-						SNeLenomics
-					</a>
+						Contact
+					</Link>
 				</nav>
 			</div>
 
