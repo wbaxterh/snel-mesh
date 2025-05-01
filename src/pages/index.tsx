@@ -157,7 +157,7 @@ export default function Home() {
 							/>
 						</a>
 						<a
-							href='https://discord.gg/6HXsbxNE'
+							href='https://discord.gg/KBjrvfkXbW'
 							target='_blank'
 							rel='noopener noreferrer'
 							className='hover:scale-110 transition'
