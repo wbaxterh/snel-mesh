@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Roadmap from "@/components/Roadmap";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -228,6 +229,8 @@ export default function Home() {
 					</video>
 				</div>
 			</section>
+			{/* Add Roadmap section */}
+			<Roadmap />
 			{/* How To Buy */}
 			<HowToBuy />
 
@@ -235,7 +238,7 @@ export default function Home() {
 			<section id='snelenomics' className='w-full bg-white rounded-lg p-6 mb-8'>
 				<h2 className='text-3xl font-bold m-4 text-center'>SNeLenomics</h2>
 				<Image
-					src='/graphics/Snelenomics.png'
+					src='/graphics/newSnelenomics2.png'
 					alt='Snelenomics'
 					width={1000} // The width and height can be omitted or set to 0 when using `w-full`
 					height={0}
@@ -243,7 +246,7 @@ export default function Home() {
 				/>
 				<h2 className='text-3xl font-bold m-4 text-center'>Dev Wallet</h2>
 				<Image
-					src='/graphics/snelenomicsDev.png'
+					src='/graphics/newSnelenomics3.png'
 					alt='Dev Wallet'
 					width={1000}
 					height={0}
